@@ -41,7 +41,7 @@ exports.updateProjectController = async (req, res) => {
     const project = await projectService.updateProject(
       req.params.id,
       req.body,
-      req.user.id,
+      req.user._id,
     );
 
     res.json(project);
@@ -55,7 +55,7 @@ exports.deleteProjectController = async (req, res) => {
   try {
     const result = await projectService.deleteProject(
       req.params.id,
-      req.user.id,
+      req.user._id,
     );
 
     res.json(result);
@@ -64,20 +64,3 @@ exports.deleteProjectController = async (req, res) => {
   }
 };
 
-// 🟢 INVEST IN PROJECT 🔥
-exports.investController = async (req, res) => {
-  try {
-    const project = await projectService.investInProject(
-      req.params.id,
-      req.body.amount,
-      req.user,
-    );
-
-    res.json({
-      message: "Investment successful",
-      project,
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};

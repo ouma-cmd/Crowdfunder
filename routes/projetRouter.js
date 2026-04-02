@@ -14,6 +14,5 @@ router.put("/:id", authMiddlware, controller.updateProjectController)
 
 router.delete("/:id", authMiddlware, controller.deleteProjectController)
 
-router.post("/:id/invest", authMiddlware, controller.investController)
 
 module.exports = router
