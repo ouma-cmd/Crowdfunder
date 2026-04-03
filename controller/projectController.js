@@ -2,7 +2,7 @@ const projectService = require("../service/projectService");
 
 // 🟢 CREATE PROJECT
 exports.createProjectController = async (req, res) => {
-  console.log(req.user);
+//   console.log(req.user);
 
   try {
     const project = await projectService.createProject(req.body, req.user._id);

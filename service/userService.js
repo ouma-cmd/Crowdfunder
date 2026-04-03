@@ -13,7 +13,6 @@ const registerUser = async (req, res) => {
 
   const userEmail = await user.findOne({ email });
   if (userEmail) {
-    console.log("email kayen ");
     throw new Error("deja execest email");
   }
 
@@ -37,8 +36,6 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const loginUser = await user.findOne({ email });
-
-    console.log(loginUser);
 
     if (!loginUser) {
       throw new Error("user not find !");

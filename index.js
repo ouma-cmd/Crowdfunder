@@ -4,7 +4,10 @@ const express = require("express");
 const connectDB = require("./config/db.js");
 const userRoutes = require("./routes/routUser.js");
 const getHeaderToken = require("./middleware/authenticationMiddle.js");
-const router = require("./routes/projetRouter.js");
+const routerProject = require("./routes/projetRouter.js");
+const routeinvest = require("./routes/investRouter.js");
+const routeCrud = require("./routes/investRouter.js");
+
 
 const app = express();
 
@@ -16,7 +19,12 @@ app.use(express.json());
 
 // routes
 app.use("/api", userRoutes);
-app.use("/project" ,router );
+app.use("/project" ,routerProject);
+
+app.use("/invest",routeinvest);
+app.use("/get",routeCrud )
+
+
 
 
 // app.get("/test", getHeaderToken, (req, res) => {

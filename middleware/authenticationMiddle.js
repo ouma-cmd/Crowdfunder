@@ -24,10 +24,9 @@ const authMiddlware = (req, res, next) => {
 
 // virify le role
 
+// const virifyOnwor = ()=>{
 
-const virifyOnwor = ()=>{
-    
-}
+// }
 
 
 module.exports = authMiddlware;

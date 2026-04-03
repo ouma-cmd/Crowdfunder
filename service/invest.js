@@ -1,8 +1,9 @@
-
+const { invest } = require("../models/Investment");
 const Project = require("../models/project");
+const { user: User } = require("../models/User");
 
-// 🟢 ADD INVESTMENT 
-exports.investInProject = async (projectId, amount, user) => {
+// 🟢 ADD INVESTMENT
+const investInProject = async (projectId, amount, user) => {
   const project = await Project.findById(projectId);
 
   if (!project) {
@@ -27,8 +28,13 @@ exports.investInProject = async (projectId, amount, user) => {
     throw new Error("You cannot invest more than allowed percentage");
   }
 
-  // ❌ check wallet
-  if (user.wallet < amount) {
+  // ✅ load user from DB and check balance
+  const dbUser = await User.findById(user._id);
+  if (!dbUser) {
+    throw new Error("User not found");
+  }
+
+  if (dbUser.balance < amount) {
     throw new Error("Insufficient balance");
   }
 
@@ -40,7 +46,34 @@ exports.investInProject = async (projectId, amount, user) => {
     project.status = "closed";
   }
 
-  await project.save();
+  // ✅ debit investor balance
+  dbUser.balance -= amount;
 
-  return project;
+  // ✅ persist project and user
+  await Promise.all([project.save(), dbUser.save()]);
+
+  // ✅ create investment record
+  const investment = await invest.create({
+    amount,
+    user: dbUser._id,
+    project: project._id,
+  });
+
+  return { project, investment };
 };
+
+// GET ALL invest
+const getAllInvest = async (user) => {
+  const invests = await invest
+    .find({ user: user._id })
+    .populate("user", "name email")
+    .populate("project", "title goalAmount currentAmount status");
+
+  return invests;
+};
+
+
+
+
+
+module.exports = { investInProject, getAllInvest };

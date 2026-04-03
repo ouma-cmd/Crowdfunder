@@ -1,8 +1,13 @@
+const express = require("express");
+const route = express.Router();
 
-const express = require("express")
-const router = express.Router()
+const {
+  investController,
+  getAllInvestController,
+} = require("../controller/invetController");
+const authMiddlware = require("../middleware/authenticationMiddle");
 
-const controller = require("../controller/projectController")
-const authMiddlware = require("../middleware/authenticationMiddle")
+route.post("/:id/invest", authMiddlware, investController);
+route.get("/", authMiddlware, getAllInvestController);
 
-router.post("/:id/invest", authMiddlware, controller.investController)
+module.exports = route;

@@ -13,6 +13,6 @@ route.post("/register", middleware, registerUserController);
 
 // login
 
-route.post("/login", loginUserController )
+route.post("/login", loginUserController );
 
 module.exports = route;

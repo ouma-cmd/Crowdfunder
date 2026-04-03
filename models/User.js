@@ -20,8 +20,8 @@ const schema = mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["investor", "owner", "admin"],
-    default: "investor",
+    enum: ["invest", "owner", "admin"],
+    // default: "investor",
   },
   balance: {
     type: Number,
@@ -29,7 +29,7 @@ const schema = mongoose.Schema({
   },
 });
 
-const user = mongoose.model("user", schema);
+const User = mongoose.models.user || mongoose.model("user", schema);
 module.exports = {
-  user,
+  user: User,
 };

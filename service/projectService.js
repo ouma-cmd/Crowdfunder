@@ -1,6 +1,6 @@
 const Project = require("../models/project");
 
-// 🟢 CREATE PROJECT
+//CREATE PROJECT
 exports.createProject = async (data, userId) => {
   const project = await Project.create({
     title: data.title,
@@ -15,14 +15,14 @@ exports.createProject = async (data, userId) => {
   return project;
 };
 
-// 🟢 GET ALL PROJECTS (only open)
+//GET ALL PROJECTS (only open)
 exports.getAllProjects = async () => {
   const projects = await Project.find({ status: "open" });
 
   return projects;
 };
 
-// 🟢 GET PROJECT BY ID
+//GET PROJECT BY ID
 exports.getProjectById = async (projectId) => {
   const project = await Project.findById(projectId);
 
@@ -33,7 +33,7 @@ exports.getProjectById = async (projectId) => {
   return project;
 };
 
-// 🟢 UPDATE PROJECT (only owner)
+//UPDATE PROJECT (only owner)
 exports.updateProject = async (projectId, data, userId) => {
   const project = await Project.findById(projectId);
 
@@ -52,12 +52,13 @@ exports.updateProject = async (projectId, data, userId) => {
   project.currentAmount = data.currentAmount || project.currentAmount;
   project.status = data.status || project.status;
   project.maxInvestmentPercentage = data.maxInvestmentPercentage || project.maxInvestmentPercentage
+
   await project.save();
 
   return project;
 };
 
-// 🟢 DELETE PROJECT
+//DELETE PROJECT
 exports.deleteProject = async (projectId, userId) => {
   const project = await Project.findById(projectId);
 
